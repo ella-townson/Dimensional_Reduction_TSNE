@@ -7,11 +7,11 @@ def create_tsne_visualization(X_scaled, intervention_types, label_encoder, save_
     """
     # Initialize and fit t-SNE
     tsne = TSNE(
-        n_components=2,
-        perplexity=40,
-        learning_rate=500,
-        n_jobs=-1,
-        random_state=42
+        n_components=2,          # Keep 2D for visualization
+        perplexity=40,           # Test a different perplexity value
+        learning_rate=500,       # Set learning rate to 300 (experiment with values between 100-1000)
+        n_jobs=-1,               # Use all cores for faster computation
+        random_state=42          # Ensure reproducibility
     )
     
     X_embedded = tsne.fit(X_scaled)
@@ -28,7 +28,8 @@ def create_tsne_visualization(X_scaled, intervention_types, label_encoder, save_
     plt.colorbar(scatter, label='Intervention Types', 
                 ticks=range(len(label_encoder.classes_)),
                 format=plt.FuncFormatter(lambda val, loc: label_encoder.inverse_transform([int(val)])[0]))
-    
+
+    # Set title and labels
     plt.title('t-SNE Visualization of Social Services Intervention Outcomes')
     plt.xlabel('t-SNE Dimension 1')
     plt.ylabel('t-SNE Dimension 2')
